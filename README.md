@@ -1,4 +1,3 @@
-
 [![testsnap](https://github.com/user-attachments/assets/e9a23ba9-d394-4711-abfc-994932605d86)](https://github.com/cafali/SnapKey/releases)
 
 **About SnapKey** 
@@ -15,15 +14,24 @@ SnapKey is a lightweight, open-source tool that operates from the system tray an
 
 Download
 --------------------------------------------------------------------------------------------------
-**[Download SnapKey from GitHub](https://github.com/cafali/SnapKey/releases)**
+<p align="center">
+  <a href="https://github.com/cafali/SnapKey/releases">Download from GitHub</a> |
+  <a href="https://sourceforge.net/projects/snapkey/">Download from SourceForge</a> |
+  <a href="https://www.softpedia.com/get/Tweak/System-Tweak/SnapKey.shtml">Download from Softpedia</a>
+</p>
+
+
+[![latesver](https://github.com/user-attachments/assets/09694f7c-6eeb-4c80-9a02-1d777956d181)](https://github.com/cafali/SnapKey/wiki/Updates)
 
 **SnapKey Features**
 --------------------------------------------------------------------------------------------------
 - Easy to use 🧩
+- Detailed documentation 📖
 - Lightweight and open-source 🌟
 - Accessible via the system tray 🖥️
 - Compatible with all keyboards ✅
 - Does not interact with game files 🎮
+- Activate/Deactivate via context menu ⛔
 - Sticky Keys Feature: tracks the state of a pressed key ⌨️
 - Enhances the precision of counter-strafing movements in games 🎯
 - Allows key rebinding using ASCII codes specified in the configuration file 🛠️
@@ -88,11 +96,23 @@ press **"A"** instead.
 4. Rebind Keys (Optional):
    - [Rebind your keys](https://github.com/cafali/SnapKey/wiki/Rebinding-Keys) if you're using a nonstandard keyboard layout or if you want to map different keys
 
-Close SnapKey
+Disable SnapKey
+--------------------------------------------------------------------------------------------------
+- Right-click the SnapKey icon in the system tray and select "Disable SnapKey". This option disables the entire SnapKey functionality of the keys that are set in the config file while keeping the SnapKey process and the software running in the tray.
+
+![image](https://github.com/user-attachments/assets/4f9d8d30-4674-4361-bc87-84ee70ce4116)
+
+
+
+
+Exit SnapKey
 --------------------------------------------------------------------------------------------------
    - Right-click the SnapKey icon in the system tray and select "Exit SnapKey"
 
-![image](https://github.com/user-attachments/assets/d92108b8-4bb8-458c-8c95-509cc57f3a6d)
+![image](https://github.com/user-attachments/assets/c3a9534e-ed8b-4258-be56-37b6117c1814)
+
+
+
 
 
 **Linux Support**
@@ -100,12 +120,6 @@ Close SnapKey
 Since SnapKey isn’t natively supported on Linux, it’s recommended to check out @Dillacorn's guide on **[running SnapKey on Linux](https://github.com/cafali/SnapKey/issues/4#issuecomment-2251568839)**.
 
 [![LINUX baner](https://github.com/user-attachments/assets/794a16ed-b0ab-4320-a680-52bda1ca0fd1)](https://github.com/cafali/SnapKey/wiki/Setup-Linux)
-
-
-
-**<img src="https://github.com/user-attachments/assets/041f7b09-7a0e-4904-b936-daee0605e476" alt="Sourceforge logo" width="25%">**
---------------------------------------------------------------------------------------------------
-[![Download SnapKey](https://a.fsdn.com/con/app/sf-download-button)](https://sourceforge.net/projects/snapkey/files/latest/download)
 
 Looking for More Information? Got Questions or Need Help?
 --------------------------------------------------------------------------------------------------

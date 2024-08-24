@@ -14,6 +14,7 @@ using namespace chrono_literals;
 #define ID_TRAY_EXIT_CONTEXT_MENU_ITEM  3000
 #define ID_TRAY_VERSION_INFO            3001
 #define ID_TRAY_REBIND_KEYS             3002
+#define ID_TRAY_LOCK_FUNCTION           3003
 #define WM_TRAYICON                     (WM_USER + 1)
 
 struct KeyState
@@ -36,6 +37,7 @@ unordered_map<int, KeyState> KeyInfo;
 HHOOK hHook = NULL;
 HANDLE hMutex = NULL;
 NOTIFYICONDATA nid;
+bool isLocked = false; // Variable to track the lock state
 
 // Function declarations
 LRESULT CALLBACK KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam);
@@ -196,7 +198,7 @@ void SendKey(int targetKey, bool keyDown)
 
 LRESULT CALLBACK KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam)
 {
-    if (nCode >= 0)
+    if (!isLocked && nCode >= 0)
     {
         KBDLLHOOKSTRUCT *pKeyBoard = (KBDLLHOOKSTRUCT *)lParam;
         if (!isSimulatedKeyEvent(pKeyBoard -> flags)) {
@@ -264,6 +266,8 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
             // Create a context menu
             HMENU hMenu = CreatePopupMenu();
             AppendMenu(hMenu, MF_STRING, ID_TRAY_REBIND_KEYS, TEXT("Rebind Keys"));
+            AppendMenu(hMenu, MF_STRING | (isLocked ? MF_CHECKED : MF_UNCHECKED), ID_TRAY_LOCK_FUNCTION, TEXT("Disable SnapKey"));
+            AppendMenu(hMenu, MF_SEPARATOR, 0, NULL);
             AppendMenu(hMenu, MF_STRING, ID_TRAY_VERSION_INFO, TEXT("Version Info"));
             AppendMenu(hMenu, MF_STRING, ID_TRAY_EXIT_CONTEXT_MENU_ITEM, TEXT("Exit SnapKey"));
 
@@ -287,8 +291,41 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
             break;
         case ID_TRAY_REBIND_KEYS:
             {
-                // Open the config file with the default editor
+                // Open the config file with the default text editor
                 ShellExecute(NULL, TEXT("open"), TEXT("config.cfg"), NULL, NULL, SW_SHOWNORMAL);
+            }
+            break;
+        case ID_TRAY_LOCK_FUNCTION:
+            {
+                isLocked = !isLocked;
+
+                // Update the tray icon based on the lock state
+                if (isLocked)
+                {
+                    // Load icon_off.ico
+                    HICON hIconOff = (HICON)LoadImage(NULL, TEXT("icon_off.ico"), IMAGE_ICON, 0, 0, LR_LOADFROMFILE);
+                    if (hIconOff)
+                    {
+                        nid.hIcon = hIconOff;
+                        Shell_NotifyIcon(NIM_MODIFY, &nid);
+                        DestroyIcon(hIconOff); // Destroy the icon after use
+                    }
+                }
+                else
+                {
+                    // Load icon.ico
+                    HICON hIconOn = (HICON)LoadImage(NULL, TEXT("icon.ico"), IMAGE_ICON, 0, 0, LR_LOADFROMFILE);
+                    if (hIconOn)
+                    {
+                        nid.hIcon = hIconOn;
+                        Shell_NotifyIcon(NIM_MODIFY, &nid);
+                        DestroyIcon(hIconOn); // Destroy the icon after use
+                    }
+                }
+
+                // Update the context menu item to reflect the new lock state
+                HMENU hMenu = GetSubMenu(GetMenu(hwnd), 0);
+                CheckMenuItem(hMenu, ID_TRAY_LOCK_FUNCTION, MF_BYCOMMAND | (isLocked ? MF_CHECKED : MF_UNCHECKED));
             }
             break;
         }
